@@ -2,10 +2,7 @@
   "name": "@gorhom/bottom-sheet",
   "version": "5.1.1",
   "description": "A performant interactive bottom sheet with fully configurable options 🚀",
-  "main": "lib/commonjs/index",
-  "module": "lib/module/index",
-  "types": "lib/typescript/index.d.ts",
-  "react-native": "src/index.ts",
+  "main": "src/index.ts",
   "source": "src/index.ts",
   "files": ["src", "lib", "mock.js"],
   "keywords": [
@@ -37,7 +34,7 @@
     "bootstrap": "yarn install && yarn example"
   },
   "dependencies": {
-    "@gorhom/portal": "1.0.14",
+    "@gorhom/portal": "Peersyst/react-native-portal",
     "invariant": "^2.2.4"
   },
   "devDependencies": {
@@ -48,8 +45,6 @@
     "@types/react": "~18.3.12",
     "@types/react-native": "~0.73.0",
     "copyfiles": "^2.4.1",
-    "husky": "^4.3.8",
-    "lint-staged": "^13.2.2",
     "metro-react-native-babel-preset": "^0.77.0",
     "react": "18.3.1",
     "react-native": "0.76.0",
