@@ -620,6 +620,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
           return;
         }
 
+        console.log(animatedCurrentIndex.value, targetIndex, animatedKeyboardState.value)
         if (targetIndex !== animatedCurrentIndex.value && animatedKeyboardState.value !== KEYBOARD_STATE.SHOWN) {
           _providedOnAnimate(
             animatedCurrentIndex.value,
