@@ -620,18 +620,15 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
           return;
         }
 
-        if (targetIndex !== animatedCurrentIndex.value) {
+        if (targetIndex !== animatedCurrentIndex.value && animatedKeyboardState.value !== KEYBOARD_STATE.SHOWN) {
+          console.log(animatedCurrentIndex.value, targetIndex, animatedKeyboardState.value)
           _providedOnAnimate(
             animatedCurrentIndex.value,
-            targetIndex !== -1
-              ? targetIndex
-              : (animatedNextPositionIndex.value > 0
-              ? Infinity
-              : -Infinity)
+            targetIndex
           );
         }
       },
-      [_providedOnAnimate, animatedCurrentIndex, animatedNextPositionIndex]
+      [_providedOnAnimate, animatedCurrentIndex, animatedKeyboardState]
     );
     //#endregion
 
