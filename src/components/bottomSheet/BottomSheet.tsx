@@ -623,11 +623,15 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
         if (targetIndex !== animatedCurrentIndex.value) {
           _providedOnAnimate(
             animatedCurrentIndex.value,
-            targetIndex
+            targetIndex !== -1
+              ? targetIndex
+              : (animatedNextPositionIndex.value > 0
+              ? Infinity
+              : -Infinity)
           );
         }
       },
-      [_providedOnAnimate, animatedCurrentIndex]
+      [_providedOnAnimate, animatedCurrentIndex, animatedNextPositionIndex]
     );
     //#endregion
 
@@ -720,16 +724,16 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
           offset = animatedKeyboardHeightInContainer.value;
         }
 
-        console.log(position - offset)
-
         animatedNextPositionIndex.value = animatedSnapPoints.value.indexOf(
-          position - offset
+          position + offset
         );
 
         /**
          * fire `onAnimate` callback
          */
-        runOnJS(handleOnAnimate)(animatedNextPositionIndex.value);
+        if (position >= offset) {
+          runOnJS(handleOnAnimate)(animatedNextPositionIndex.value);
+        }
 
         /**
          * start animation
