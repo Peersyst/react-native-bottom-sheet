@@ -621,7 +621,10 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
         }
 
         if (targetIndex !== animatedCurrentIndex.value) {
-          _providedOnAnimate(animatedCurrentIndex.value, targetIndex);
+          _providedOnAnimate(
+            animatedCurrentIndex.value,
+            targetIndex > animatedCurrentIndex.value ? Infinity : -Infinity
+          );
         }
       },
       [_providedOnAnimate, animatedCurrentIndex]
