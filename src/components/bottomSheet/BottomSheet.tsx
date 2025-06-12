@@ -620,15 +620,14 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
           return;
         }
 
-        console.log(animatedCurrentIndex.value, targetIndex, animatedKeyboardState.value)
-        if (targetIndex !== animatedCurrentIndex.value && animatedKeyboardState.value !== KEYBOARD_STATE.SHOWN) {
+        if (targetIndex !== animatedCurrentIndex.value) {
           _providedOnAnimate(
             animatedCurrentIndex.value,
             targetIndex
           );
         }
       },
-      [_providedOnAnimate, animatedCurrentIndex, animatedKeyboardState]
+      [_providedOnAnimate, animatedCurrentIndex]
     );
     //#endregion
 
@@ -713,17 +712,11 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
          */
         animatedNextPosition.value = position;
 
-        /**
-         * offset the position if keyboard is shown
-         */
-        let offset = 0;
-        if (animatedKeyboardState.value === KEYBOARD_STATE.SHOWN) {
-          offset = animatedKeyboardHeightInContainer.value;
-        }
-
         animatedNextPositionIndex.value = animatedSnapPoints.value.indexOf(
-          position + offset
+          position
         );
+
+        console.log(animatedNextPositionIndex.value)
 
         /**
          * fire `onAnimate` callback
