@@ -623,11 +623,15 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
         if (targetIndex !== animatedCurrentIndex.value) {
           _providedOnAnimate(
             animatedCurrentIndex.value,
-            targetIndex > 0 ? Infinity : -Infinity
+            targetIndex !== -1
+              ? targetIndex
+              : (animatedNextPositionIndex.value > 0
+              ? Infinity
+              : -Infinity)
           );
         }
       },
-      [_providedOnAnimate, animatedCurrentIndex]
+      [_providedOnAnimate, animatedCurrentIndex, animatedNextPositionIndex]
     );
     //#endregion
 
