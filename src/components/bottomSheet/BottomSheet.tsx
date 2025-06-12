@@ -727,9 +727,8 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
         /**
          * fire `onAnimate` callback
          */
-        if (!offset || position >= offset) {
-          runOnJS(handleOnAnimate)(animatedNextPositionIndex.value);
-        }
+        console.log(position, position > 0 ? animatedNextPositionIndex.value : -Infinity)
+        runOnJS(handleOnAnimate)(position > 0 ? animatedNextPositionIndex.value : -Infinity);
 
         /**
          * start animation
