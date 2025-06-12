@@ -48,6 +48,12 @@ export interface BottomSheetModalProps<T = any>
 
   // callbacks
   /**
+   * Callback when the modal is closed.
+   * @type () => void;
+   */
+  onClose?: () => void;
+
+  /**
    * Callback when the modal dismissed.
    * @type () => void;
    */

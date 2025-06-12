@@ -43,6 +43,7 @@ function BottomSheetModalComponent<T = any>(
     name,
     stackBehavior = DEFAULT_STACK_BEHAVIOR,
     enableDismissOnClose = DEFAULT_ENABLE_DISMISS_ON_CLOSE,
+    onClose: _providedOnClose,
     onDismiss: _providedOnDismiss,
     onAnimate: _providedOnAnimate,
 
@@ -404,6 +405,10 @@ function BottomSheetModalComponent<T = any>(
 
       if (minimized.current) {
         return;
+      }
+
+      if (_providedOnClose) {
+        _providedOnClose();
       }
 
       if (enableDismissOnClose) {
