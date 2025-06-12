@@ -415,7 +415,7 @@ function BottomSheetModalComponent<T = any>(
         unmount();
       }
     },
-    [enableDismissOnClose, unmount]
+    [enableDismissOnClose, _providedOnClose, unmount]
   );
   //#endregion
 
