@@ -1,5 +1,7 @@
+import { StyleSheet } from 'react-native';
 export declare const styles: {
-    container: {
+    container: StyleSheet.AbsoluteFillStyle;
+    background: {
         backgroundColor: string;
         borderRadius: number;
     };

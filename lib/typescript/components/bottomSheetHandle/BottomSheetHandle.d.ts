@@ -1,5 +1,6 @@
 import React from 'react';
 import type { BottomSheetDefaultHandleProps } from './types';
-declare const BottomSheetHandle: React.MemoExoticComponent<({ style, indicatorStyle: _indicatorStyle, children, accessible, accessibilityRole, accessibilityLabel, accessibilityHint, }: BottomSheetDefaultHandleProps) => React.JSX.Element>;
+declare function BottomSheetHandleComponent({ style, indicatorStyle: _indicatorStyle, accessible, accessibilityRole, accessibilityLabel, accessibilityHint, children, }: BottomSheetDefaultHandleProps): React.JSX.Element;
+declare const BottomSheetHandle: React.MemoExoticComponent<typeof BottomSheetHandleComponent>;
 export default BottomSheetHandle;
 //# sourceMappingURL=BottomSheetHandle.d.ts.map

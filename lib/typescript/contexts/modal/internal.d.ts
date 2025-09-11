@@ -1,10 +1,10 @@
 import { type RefObject } from 'react';
-import type { Insets } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type { BottomSheetModalPrivateMethods, BottomSheetModalStackBehavior } from '../../components/bottomSheetModal';
+import type { ContainerLayoutState } from '../../types';
 export interface BottomSheetModalInternalContextType {
-    containerHeight: SharedValue<number>;
-    containerOffset: SharedValue<Required<Insets>>;
+    hostName: string;
+    containerLayoutState: SharedValue<ContainerLayoutState>;
     mountSheet: (key: string, ref: RefObject<BottomSheetModalPrivateMethods>, stackBehavior: BottomSheetModalStackBehavior) => void;
     unmountSheet: (key: string) => void;
     willUnmountSheet: (key: string) => void;

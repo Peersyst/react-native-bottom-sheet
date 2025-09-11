@@ -1,5 +1,5 @@
 import type React from 'react';
-import type { Insets, StyleProp, ViewStyle } from 'react-native';
+import type { Insets, StyleProp, View, ViewStyle } from 'react-native';
 import type { PanGesture } from 'react-native-gesture-handler';
 import type {
   AnimateStyle,
@@ -16,6 +16,7 @@ import type {
   SNAP_POINT_TYPE,
 } from '../../constants';
 import type {
+  ContainerLayoutState,
   GestureEventsHandlersHookType,
   NullableAccessibilityProps,
 } from '../../types';
@@ -113,13 +114,22 @@ export interface BottomSheetProps
    * if `containerHeight` not provided, the library internally will calculate it,
    * however this will cause an extra re-rendering.
    * @type number | SharedValue<number>;
+   * @deprecated please use `containerLayoutState` instead.
    */
   containerHeight?: number | SharedValue<number>;
   /**
    * Container offset helps to accurately detect container offsets.
    * @type SharedValue<number>;
+   * @deprecated please use `containerLayoutState` instead.
    */
   containerOffset?: SharedValue<Required<Insets>>;
+  /**
+   * Container layout state, this is used to calculate the container height and offsets.
+   * If not provided, the library will use the default container layout state.
+   * @type SharedValue<ContainerLayoutState>
+   * @default undefined
+   */
+  containerLayoutState?: SharedValue<ContainerLayoutState>;
   /**
    * Top inset value helps to calculate percentage snap points values,
    * usually comes from `@react-navigation/stack` hook `useHeaderHeight` or
@@ -264,9 +274,14 @@ export interface BottomSheetProps
   /**
    * Callback when the sheet about to animate to a new position.
    *
-   * @type (fromIndex: number, toIndex: number) => void;
+   * @type (fromIndex: number, toIndex: number, fromPosition: number, toPosition: number) => void;
    */
-  onAnimate?: (fromIndex: number, toIndex: number) => void;
+  onAnimate?: (
+    fromIndex: number,
+    toIndex: number,
+    fromPosition: number,
+    toPosition: number
+  ) => void;
   //#endregion
 
   //#region components
@@ -276,13 +291,14 @@ export interface BottomSheetProps
    * @type React.FC\<BottomSheetHandleProps\>
    */
   handleComponent?: React.FC<BottomSheetHandleProps> | null;
+
   /**
    * Component to be placed as a sheet backdrop.
    * @see {BottomSheetBackdropProps}
    * @type React.FC\<BottomSheetBackdropProps\>
-   * @default null
+   * @default undefined
    */
-  backdropComponent?: React.FC<BottomSheetBackdropProps> | null;
+  backdropComponent?: React.FC<BottomSheetBackdropProps>;
   /**
    * Component to be placed as a background.
    * @see {BottomSheetBackgroundProps}

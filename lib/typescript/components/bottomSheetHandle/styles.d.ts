@@ -1,5 +1,9 @@
 export declare const styles: {
     container: {
+        cursor: "pointer";
+        padding: number;
+    } | {
+        cursor?: undefined;
         padding: number;
     };
     indicator: {

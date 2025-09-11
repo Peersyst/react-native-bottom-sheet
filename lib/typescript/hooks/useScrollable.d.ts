@@ -1,12 +1,10 @@
 import { type RefObject } from 'react';
-import { SCROLLABLE_STATE, SCROLLABLE_TYPE } from '../constants';
-import type { Scrollable, ScrollableRef } from '../types';
-export declare const useScrollable: () => {
-    scrollableRef: RefObject<ScrollableRef>;
-    animatedScrollableType: import("react-native-reanimated").SharedValue<SCROLLABLE_TYPE>;
-    animatedScrollableContentOffsetY: import("react-native-reanimated").SharedValue<number>;
-    animatedScrollableOverrideState: import("react-native-reanimated").SharedValue<SCROLLABLE_STATE>;
-    isScrollableRefreshable: import("react-native-reanimated").SharedValue<boolean>;
+import { type SharedValue } from 'react-native-reanimated';
+import { SCROLLABLE_STATUS, SHEET_STATE } from '../constants';
+import type { AnimationState, KeyboardState, Scrollable, ScrollableRef, ScrollableState } from '../types';
+export declare const useScrollable: (enableContentPanningGesture: boolean, animatedSheetState: SharedValue<SHEET_STATE>, animatedKeyboardState: SharedValue<KeyboardState>, animatedAnimationState: SharedValue<AnimationState>) => {
+    state: SharedValue<ScrollableState>;
+    status: import("react-native-reanimated").DerivedValue<SCROLLABLE_STATUS>;
     setScrollableRef: (ref: ScrollableRef) => void;
     removeScrollableRef: (ref: RefObject<Scrollable>) => void;
 };

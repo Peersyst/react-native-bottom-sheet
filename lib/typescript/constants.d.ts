@@ -1,4 +1,5 @@
 import type Animated from 'react-native-reanimated';
+import type { SpringConfig, TimingConfig } from './types';
 declare const WINDOW_HEIGHT: number, WINDOW_WIDTH: number;
 declare const SCREEN_HEIGHT: number, SCREEN_WIDTH: number;
 declare enum GESTURE_SOURCE {
@@ -14,7 +15,7 @@ declare enum SHEET_STATE {
     OVER_EXTENDED = 3,
     FILL_PARENT = 4
 }
-declare enum SCROLLABLE_STATE {
+declare enum SCROLLABLE_STATUS {
     LOCKED = 0,
     UNLOCKED = 1,
     UNDETERMINED = 2
@@ -27,7 +28,7 @@ declare enum SCROLLABLE_TYPE {
     SECTIONLIST = 4,
     VIRTUALIZEDLIST = 5
 }
-declare enum ANIMATION_STATE {
+declare enum ANIMATION_STATUS {
     UNDETERMINED = 0,
     RUNNING = 1,
     STOPPED = 2,
@@ -46,7 +47,7 @@ declare enum ANIMATION_METHOD {
     TIMING = 0,
     SPRING = 1
 }
-declare enum KEYBOARD_STATE {
+declare enum KEYBOARD_STATUS {
     UNDETERMINED = 0,
     SHOWN = 1,
     HIDDEN = 2
@@ -57,17 +58,7 @@ declare enum SNAP_POINT_TYPE {
 }
 declare const ANIMATION_EASING: Animated.EasingFunction;
 declare const ANIMATION_DURATION = 250;
-declare const ANIMATION_CONFIGS: {
-    damping: number;
-    stiffness: number;
-    mass: number;
-    overshootClamping: boolean;
-    restDisplacementThreshold: number;
-    restSpeedThreshold: number;
-} | {
-    duration: number;
-    easing: import("react-native-reanimated").EasingFunction;
-};
+declare const ANIMATION_CONFIGS: TimingConfig | SpringConfig;
 declare const SCROLLABLE_DECELERATION_RATE_MAPPER: {
     2: number;
     0: number;
@@ -92,5 +83,15 @@ declare const KEYBOARD_INPUT_MODE: {
     readonly adjustResize: "adjustResize";
 };
 declare const KEYBOARD_DISMISS_THRESHOLD = 12.5;
-export { GESTURE_SOURCE, SHEET_STATE, ANIMATION_STATE, ANIMATION_METHOD, ANIMATION_SOURCE, SCROLLABLE_TYPE, SCROLLABLE_STATE, KEYBOARD_STATE, SNAP_POINT_TYPE, WINDOW_HEIGHT, WINDOW_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCROLLABLE_DECELERATION_RATE_MAPPER, MODAL_STACK_BEHAVIOR, KEYBOARD_BEHAVIOR, KEYBOARD_BLUR_BEHAVIOR, KEYBOARD_INPUT_MODE, KEYBOARD_DISMISS_THRESHOLD, ANIMATION_CONFIGS, ANIMATION_EASING, ANIMATION_DURATION, };
+declare const INITIAL_LAYOUT_VALUE = -999;
+declare const INITIAL_CONTAINER_LAYOUT: {
+    height: number;
+    offset: {
+        top: number;
+        bottom: number;
+        right: number;
+        left: number;
+    };
+};
+export { GESTURE_SOURCE, SHEET_STATE, ANIMATION_STATUS, ANIMATION_METHOD, ANIMATION_SOURCE, SCROLLABLE_TYPE, SCROLLABLE_STATUS, KEYBOARD_STATUS, SNAP_POINT_TYPE, WINDOW_HEIGHT, WINDOW_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCROLLABLE_DECELERATION_RATE_MAPPER, MODAL_STACK_BEHAVIOR, KEYBOARD_BEHAVIOR, KEYBOARD_BLUR_BEHAVIOR, KEYBOARD_INPUT_MODE, KEYBOARD_DISMISS_THRESHOLD, ANIMATION_CONFIGS, ANIMATION_EASING, ANIMATION_DURATION, INITIAL_LAYOUT_VALUE, INITIAL_CONTAINER_LAYOUT, };
 //# sourceMappingURL=constants.d.ts.map
