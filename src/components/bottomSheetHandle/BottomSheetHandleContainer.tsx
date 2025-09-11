@@ -1,15 +1,15 @@
-import React, { memo, useCallback, useMemo } from 'react';
-import type { LayoutChangeEvent } from 'react-native';
+import React, { memo, useCallback, useMemo, useRef } from 'react';
+import type { LayoutChangeEvent, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import {
+  type BoundingClientRect,
   useBottomSheetGestureHandlers,
   useBottomSheetInternal,
+  useBoundingClientRect,
 } from '../../hooks';
 import { print } from '../../utilities';
 import { DEFAULT_ENABLE_HANDLE_PANNING_GESTURE } from '../bottomSheet/constants';
-import BottomSheetHandle from '../bottomSheetHandle';
-import { styles } from './styles';
 import type { BottomSheetHandleContainerProps } from './types';
 
 function BottomSheetHandleContainerComponent({
@@ -17,13 +17,17 @@ function BottomSheetHandleContainerComponent({
   animatedPosition,
   simultaneousHandlers: _internalSimultaneousHandlers,
   enableHandlePanningGesture = DEFAULT_ENABLE_HANDLE_PANNING_GESTURE,
-  handleHeight,
-  handleComponent: _providedHandleComponent,
+  handleComponent: HandleComponent,
   handleStyle: _providedHandleStyle,
   handleIndicatorStyle: _providedIndicatorStyle,
 }: BottomSheetHandleContainerProps) {
+  //#region refs
+  const ref = useRef<View>(null);
+  //#endregion
+
   //#region hooks
   const {
+    animatedLayoutState,
     activeOffsetX,
     activeOffsetY,
     failOffsetX,
@@ -52,7 +56,6 @@ function BottomSheetHandleContainerComponent({
 
     return refs;
   }, [_providedSimultaneousHandlers, _internalSimultaneousHandlers]);
-
   const panGesture = useMemo(() => {
     let gesture = Gesture.Pan()
       .enabled(enableHandlePanningGesture)
@@ -112,11 +115,15 @@ function BottomSheetHandleContainerComponent({
         layout: { height },
       },
     }: LayoutChangeEvent) {
-      handleHeight.value = height;
+      animatedLayoutState.modify(state => {
+        'worklet';
+        state.handleHeight = height;
+        return state;
+      });
 
       if (__DEV__) {
         print({
-          component: BottomSheetHandleContainer.displayName,
+          component: 'BottomSheetHandleContainer',
           method: 'handleContainerLayout',
           category: 'layout',
           params: {
@@ -125,21 +132,42 @@ function BottomSheetHandleContainerComponent({
         });
       }
     },
-    [handleHeight]
+    [animatedLayoutState]
+  );
+  const handleBoundingClientRect = useCallback(
+    ({ height }: BoundingClientRect) => {
+      animatedLayoutState.modify(state => {
+        'worklet';
+        state.handleHeight = height;
+        return state;
+      });
+
+      if (__DEV__) {
+        print({
+          component: 'BottomSheetHandleContainer',
+          method: 'handleBoundingClientRect',
+          category: 'layout',
+          params: {
+            height,
+          },
+        });
+      }
+    },
+    [animatedLayoutState]
   );
   //#endregion
 
+  //#region effects
+  useBoundingClientRect(ref, handleBoundingClientRect);
+  //#endregion
+
   //#region renders
-  const HandleComponent =
-    _providedHandleComponent === undefined
-      ? BottomSheetHandle
-      : _providedHandleComponent;
-  return HandleComponent !== null ? (
+  return (
     <GestureDetector gesture={panGesture}>
       <Animated.View
-        key="BottomSheetHandleContainer"
+        ref={ref}
         onLayout={handleContainerLayout}
-        style={styles.container}
+        key="BottomSheetHandleContainer"
       >
         <HandleComponent
           animatedIndex={animatedIndex}
@@ -149,7 +177,7 @@ function BottomSheetHandleContainerComponent({
         />
       </Animated.View>
     </GestureDetector>
-  ) : null;
+  );
   //#endregion
 }
 

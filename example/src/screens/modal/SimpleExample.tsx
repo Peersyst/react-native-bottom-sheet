@@ -1,6 +1,9 @@
+import {
+  type BottomSheetHandleProps,
+  BottomSheetModal,
+} from '@gorhom/bottom-sheet';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { BottomSheetHandleProps, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { StyleSheet, View } from 'react-native';
 import { Button } from '../../components/button';
 import { ContactList } from '../../components/contactList';
 import { HeaderHandle } from '../../components/headerHandle';
@@ -20,27 +23,28 @@ export const SimpleExample = () => {
 
   //#region callbacks
   const handleChange = useCallback((index: number) => {
-    // eslint-disable-next-line no-console
-    console.log('index', index);
+    console.log('handleChange', index);
+  }, []);
+  const handleAnimate = useCallback((fromIndex: number, toIndex: number) => {
+    console.log('handleAnimate', fromIndex, '>', toIndex);
   }, []);
   const handleDismiss = useCallback(() => {
-    // eslint-disable-next-line no-console
     console.log('on dismiss');
   }, []);
   const handleDismissPress = useCallback(() => {
-    bottomSheetRef.current!.dismiss();
+    bottomSheetRef.current?.dismiss();
   }, []);
   const handleClosePress = useCallback(() => {
-    bottomSheetRef.current!.close();
+    bottomSheetRef.current?.close();
   }, []);
   const handleExpandPress = useCallback(() => {
-    bottomSheetRef.current!.expand();
+    bottomSheetRef.current?.expand();
   }, []);
   const handleCollapsePress = useCallback(() => {
-    bottomSheetRef.current!.collapse();
+    bottomSheetRef.current?.collapse();
   }, []);
   const handlePresentPress = useCallback(() => {
-    bottomSheetRef.current!.present();
+    bottomSheetRef.current?.present();
   }, []);
   const handleEnablePanDownToClosePress = useCallback(() => {
     setEnablePanDownToClose(state => !state);
@@ -84,9 +88,10 @@ export const SimpleExample = () => {
         enableDynamicSizing={false}
         onDismiss={handleDismiss}
         onChange={handleChange}
+        onAnimate={handleAnimate}
         handleComponent={renderHeaderHandle}
       >
-        <ContactList count={4} type="View" />
+        <ContactList count={5} type="ScrollView" />
       </BottomSheetModal>
     </View>
   );

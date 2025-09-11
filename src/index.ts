@@ -17,6 +17,7 @@ export { useGestureEventsHandlersDefault } from './hooks/useGestureEventsHandler
 export { useBottomSheetGestureHandlers } from './hooks/useBottomSheetGestureHandlers';
 export { useScrollHandler } from './hooks/useScrollHandler';
 export { useScrollableSetter } from './hooks/useScrollableSetter';
+export { useBottomSheetScrollableCreator } from './hooks/useBottomSheetScrollableCreator';
 //#endregion
 
 //#region components
@@ -27,13 +28,15 @@ export {
   BottomSheetVirtualizedList,
   BottomSheetFlashList,
 } from './components/bottomSheetScrollable';
-export { default as BottomSheetHandle } from './components/bottomSheetHandle';
+export { BottomSheetHandle } from './components/bottomSheetHandle';
 export { default as BottomSheetDraggableView } from './components/bottomSheetDraggableView';
 export { default as BottomSheetView } from './components/bottomSheetView';
 export { default as BottomSheetTextInput } from './components/bottomSheetTextInput';
-export { default as BottomSheetBackdrop } from './components/bottomSheetBackdrop';
-export { default as BottomSheetFooter } from './components/bottomSheetFooter';
-export { default as BottomSheetFooterContainer } from './components/bottomSheetFooterContainer/BottomSheetFooterContainer';
+export { BottomSheetBackdrop } from './components/bottomSheetBackdrop';
+export {
+  BottomSheetFooter,
+  BottomSheetFooterContainer,
+} from './components/bottomSheetFooter';
 
 // touchables
 import BottomSheetTouchable from './components/touchables';

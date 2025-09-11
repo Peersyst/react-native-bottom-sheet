@@ -1,8 +1,8 @@
 import { type TouchEvent, useEffect, useRef } from 'react';
-import { findNodeHandle } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
-import { ANIMATION_STATE, SCROLLABLE_STATE } from '../constants';
+import { ANIMATION_STATUS, SCROLLABLE_STATUS } from '../constants';
 import type { Scrollable, ScrollableEvent } from '../types';
+import { findNodeHandle } from '../utilities/findNodeHandle.web';
 import { useBottomSheetInternal } from './useBottomSheetInternal';
 
 export type ScrollEventContextType = {
@@ -22,8 +22,8 @@ export const useScrollHandler = (_: never, onScroll?: ScrollableEvent) => {
   //#region hooks
   const {
     animatedScrollableState,
+    animatedScrollableStatus,
     animatedAnimationState,
-    animatedScrollableContentOffsetY,
   } = useBottomSheetInternal();
   //#endregion
 
@@ -31,7 +31,6 @@ export const useScrollHandler = (_: never, onScroll?: ScrollableEvent) => {
   useEffect(() => {
     // biome-ignore lint: to be addressed!
     const element = findNodeHandle(scrollableRef.current) as any;
-
     let scrollOffset = 0;
     let supportsPassive = false;
     let maybePrevent = false;
@@ -51,7 +50,10 @@ export const useScrollHandler = (_: never, onScroll?: ScrollableEvent) => {
     }
 
     function handleOnTouchMove(event: TouchEvent) {
-      if (animatedScrollableState.value === SCROLLABLE_STATE.LOCKED) {
+      if (
+        animatedScrollableStatus.value === SCROLLABLE_STATUS.LOCKED &&
+        event.cancelable
+      ) {
         return event.preventDefault();
       }
 
@@ -61,7 +63,7 @@ export const useScrollHandler = (_: never, onScroll?: ScrollableEvent) => {
         const touchY = event.touches[0].clientY;
         const touchYDelta = touchY - lastTouchY;
 
-        if (touchYDelta > 0) {
+        if (touchYDelta > 0 && event.cancelable) {
           return event.preventDefault();
         }
       }
@@ -70,7 +72,7 @@ export const useScrollHandler = (_: never, onScroll?: ScrollableEvent) => {
     }
 
     function handleOnTouchEnd() {
-      if (animatedScrollableState.value === SCROLLABLE_STATE.LOCKED) {
+      if (animatedScrollableStatus.value === SCROLLABLE_STATUS.LOCKED) {
         const lockPosition = shouldLockInitialPosition
           ? (initialContentOffsetY ?? 0)
           : 0;
@@ -87,12 +89,16 @@ export const useScrollHandler = (_: never, onScroll?: ScrollableEvent) => {
     function handleOnScroll(event: TouchEvent) {
       scrollOffset = element.scrollTop;
 
-      if (animatedAnimationState.value !== ANIMATION_STATE.RUNNING) {
-        scrollableContentOffsetY.value = Math.max(0, scrollOffset);
-        animatedScrollableContentOffsetY.value = Math.max(0, scrollOffset);
+      if (animatedAnimationState.get().status !== ANIMATION_STATUS.RUNNING) {
+        const contentOffsetY = Math.max(0, scrollOffset);
+        scrollableContentOffsetY.value = contentOffsetY;
+        animatedScrollableState.set(state => ({
+          ...state,
+          contentOffsetY,
+        }));
       }
 
-      if (scrollOffset <= 0) {
+      if (scrollOffset <= 0 && event.cancelable) {
         event.preventDefault();
         event.stopPropagation();
         return false;
@@ -161,8 +167,8 @@ export const useScrollHandler = (_: never, onScroll?: ScrollableEvent) => {
     };
   }, [
     animatedAnimationState,
-    animatedScrollableContentOffsetY,
     animatedScrollableState,
+    animatedScrollableStatus,
     scrollableContentOffsetY,
   ]);
   //#endregion

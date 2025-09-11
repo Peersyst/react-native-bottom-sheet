@@ -1,16 +1,17 @@
 import { PortalProvider } from '@gorhom/portal';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { useSharedValue } from 'react-native-reanimated';
-import { MODAL_STACK_BEHAVIOR } from '../../constants';
+import {
+  INITIAL_CONTAINER_LAYOUT,
+  MODAL_STACK_BEHAVIOR,
+} from '../../constants';
 import {
   BottomSheetModalInternalProvider,
   BottomSheetModalProvider,
 } from '../../contexts';
-import {
-  INITIAL_CONTAINER_HEIGHT,
-  INITIAL_CONTAINER_OFFSET,
-} from '../bottomSheet/constants';
-import BottomSheetContainer from '../bottomSheetContainer';
+import type { ContainerLayoutState } from '../../types';
+import { id } from '../../utilities/id';
+import { BottomSheetHostingContainer } from '../bottomSheetHostingContainer';
 import type {
   BottomSheetModalPrivateMethods,
   BottomSheetModalStackBehavior,
@@ -24,11 +25,13 @@ const BottomSheetModalProviderWrapper = ({
   children,
 }: BottomSheetModalProviderProps) => {
   //#region layout variables
-  const animatedContainerHeight = useSharedValue(INITIAL_CONTAINER_HEIGHT);
-  const animatedContainerOffset = useSharedValue(INITIAL_CONTAINER_OFFSET);
+  const animatedContainerLayoutState = useSharedValue<ContainerLayoutState>(
+    INITIAL_CONTAINER_LAYOUT
+  );
   //#endregion
 
   //#region variables
+  const hostName = useMemo(() => `bottom-sheet-portal-${id()}`, []);
   const sheetsQueueRef = useRef<BottomSheetModalRef[]>([]);
   //#endregion
 
@@ -175,15 +178,15 @@ const BottomSheetModalProviderWrapper = ({
   );
   const internalContextVariables = useMemo(
     () => ({
-      containerHeight: animatedContainerHeight,
-      containerOffset: animatedContainerOffset,
+      hostName,
+      containerLayoutState: animatedContainerLayoutState,
       mountSheet: handleMountSheet,
       unmountSheet: handleUnmountSheet,
       willUnmountSheet: handleWillUnmountSheet,
     }),
     [
-      animatedContainerHeight,
-      animatedContainerOffset,
+      hostName,
+      animatedContainerLayoutState,
       handleMountSheet,
       handleUnmountSheet,
       handleWillUnmountSheet,
@@ -195,11 +198,10 @@ const BottomSheetModalProviderWrapper = ({
   return (
     <BottomSheetModalProvider value={externalContextVariables}>
       <BottomSheetModalInternalProvider value={internalContextVariables}>
-        <BottomSheetContainer
-          containerOffset={animatedContainerOffset}
-          containerHeight={animatedContainerHeight}
+        <BottomSheetHostingContainer
+          containerLayoutState={animatedContainerLayoutState}
         />
-        <PortalProvider>{children}</PortalProvider>
+        <PortalProvider rootHostName={hostName}>{children}</PortalProvider>
       </BottomSheetModalInternalProvider>
     </BottomSheetModalProvider>
   );

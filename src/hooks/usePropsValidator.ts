@@ -14,15 +14,23 @@ export const usePropsValidator = ({
   enableDynamicSizing,
   topInset,
   bottomInset,
+  containerHeight,
+  containerOffset,
 }: Pick<
   BottomSheetProps,
-  'index' | 'snapPoints' | 'enableDynamicSizing' | 'topInset' | 'bottomInset'
+  | 'index'
+  | 'snapPoints'
+  | 'enableDynamicSizing'
+  | 'topInset'
+  | 'bottomInset'
+  | 'containerHeight'
+  | 'containerOffset'
 >) => {
   useMemo(() => {
     //#region snap points
     const _snapPoints = snapPoints
-      ? 'value' in snapPoints
-        ? snapPoints.value
+      ? 'get' in snapPoints
+        ? snapPoints.get()
         : snapPoints
       : [];
     invariant(
@@ -76,6 +84,25 @@ export const usePropsValidator = ({
     );
     //#endregion
 
+    //#region container height and offset
+    invariant(
+      containerHeight === undefined,
+      `'containerHeight' is deprecated, please use 'containerLayoutState'.`
+    );
+
+    invariant(
+      containerOffset === undefined,
+      `'containerHeight' is deprecated, please use 'containerLayoutState'.`
+    );
+
     // animations
-  }, [index, snapPoints, topInset, bottomInset, enableDynamicSizing]);
+  }, [
+    index,
+    snapPoints,
+    topInset,
+    bottomInset,
+    enableDynamicSizing,
+    containerHeight,
+    containerOffset,
+  ]);
 };

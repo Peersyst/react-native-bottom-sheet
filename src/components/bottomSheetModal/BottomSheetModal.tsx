@@ -69,13 +69,13 @@ function BottomSheetModalComponent<T = any>(
 
   //#region hooks
   const {
-    containerHeight,
-    containerOffset,
+    hostName,
+    containerLayoutState,
     mountSheet,
     unmountSheet,
     willUnmountSheet,
   } = useBottomSheetModalInternal();
-  const { removePortal: unmountPortal } = usePortal();
+  const { removePortal: unmountPortal } = usePortal(hostName);
   //#endregion
 
   //#region refs
@@ -94,7 +94,6 @@ function BottomSheetModalComponent<T = any>(
   //#endregion
 
   //#region private methods
-  // biome-ignore lint/correctness/useExhaustiveDependencies(BottomSheetModal.name): used for debug only
   const resetVariables = useCallback(function resetVariables() {
     print({
       component: BottomSheetModal.name,
@@ -106,7 +105,6 @@ function BottomSheetModalComponent<T = any>(
     mounted.current = false;
     forcedDismissed.current = false;
   }, []);
-  // biome-ignore lint/correctness/useExhaustiveDependencies(BottomSheetModal.name): used for debug only
   const unmount = useCallback(
     function unmount() {
       if (__DEV__) {
@@ -260,7 +258,6 @@ function BottomSheetModalComponent<T = any>(
     },
     [willUnmountSheet, unmount, key, enablePanDownToClose]
   );
-  // biome-ignore lint/correctness/useExhaustiveDependencies(BottomSheetModal.name): used for debug only
   const handleMinimize = useCallback(
     function handleMinimize() {
       if (__DEV__) {
@@ -312,7 +309,6 @@ function BottomSheetModalComponent<T = any>(
   //#endregion
 
   //#region callbacks
-  // biome-ignore lint/correctness/useExhaustiveDependencies(BottomSheetModal.name): used for debug only
   const handlePortalOnUnmount = useCallback(
     function handlePortalOnUnmount() {
       if (__DEV__) {
@@ -379,11 +375,16 @@ function BottomSheetModalComponent<T = any>(
     [_providedOnChange]
   );
   const handleBottomSheetOnAnimate = useCallback(
-    (fromIndex: number, toIndex: number) => {
+    (
+      fromIndex: number,
+      toIndex: number,
+      fromPosition: number,
+      toPosition: number
+    ) => {
       nextIndexRef.current = toIndex;
 
       if (_providedOnAnimate) {
-        _providedOnAnimate(fromIndex, toIndex);
+        _providedOnAnimate(fromIndex, toIndex, fromPosition, toPosition);
       }
     },
     [_providedOnAnimate]
@@ -442,6 +443,7 @@ function BottomSheetModalComponent<T = any>(
     <Portal
       key={key}
       name={key}
+      hostName={hostName}
       handleOnMount={handlePortalRender}
       handleOnUpdate={handlePortalRender}
       handleOnUnmount={handlePortalOnUnmount}
@@ -455,8 +457,7 @@ function BottomSheetModalComponent<T = any>(
           snapPoints={snapPoints}
           enablePanDownToClose={enablePanDownToClose}
           animateOnMount={animateOnMount}
-          containerHeight={containerHeight}
-          containerOffset={containerOffset}
+          containerLayoutState={containerLayoutState}
           onChange={handleBottomSheetOnChange}
           onClose={handleBottomSheetOnClose}
           onAnimate={handleBottomSheetOnAnimate}

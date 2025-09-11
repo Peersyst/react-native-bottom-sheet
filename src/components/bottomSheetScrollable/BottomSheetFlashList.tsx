@@ -1,7 +1,7 @@
 // @ts-ignore
 import type { FlashListProps } from '@shopify/flash-list';
 import React, { forwardRef, memo, type Ref, useMemo } from 'react';
-import { type ScrollViewProps, StyleSheet } from 'react-native';
+import type { ScrollViewProps } from 'react-native';
 import type Animated from 'react-native-reanimated';
 import BottomSheetScrollView from './BottomSheetScrollView';
 import type {
@@ -45,6 +45,10 @@ const BottomSheetFlashListComponent = forwardRef<
     if (!FlashList) {
       throw 'You need to install FlashList first, `yarn install @shopify/flash-list`';
     }
+
+    console.warn(
+      'BottomSheetFlashList is deprecated, please use useBottomSheetScrollableCreator instead.'
+    );
   }, []);
 
   //#region render
@@ -75,13 +79,6 @@ const BottomSheetFlashListComponent = forwardRef<
     />
   );
   //#endregion
-});
-
-export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    overflow: 'visible',
-  },
 });
 
 export const BottomSheetFlashList = memo(BottomSheetFlashListComponent);

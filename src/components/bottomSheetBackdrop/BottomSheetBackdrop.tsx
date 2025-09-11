@@ -104,12 +104,11 @@ const BottomSheetBackdropComponent = ({
         [0, 0, opacity],
         Extrapolation.CLAMP
       ),
-      flex: 1,
     }),
     [animatedIndex, appearsOnIndex, disappearsOnIndex, opacity]
   );
   const containerStyle = useMemo(
-    () => [styles.container, style, containerAnimatedStyle],
+    () => [styles.backdrop, style, containerAnimatedStyle],
     [style, containerAnimatedStyle]
   );
   //#endregion
@@ -162,7 +161,5 @@ const BottomSheetBackdropComponent = ({
   );
 };
 
-const BottomSheetBackdrop = memo(BottomSheetBackdropComponent);
+export const BottomSheetBackdrop = memo(BottomSheetBackdropComponent);
 BottomSheetBackdrop.displayName = 'BottomSheetBackdrop';
-
-export default BottomSheetBackdrop;
