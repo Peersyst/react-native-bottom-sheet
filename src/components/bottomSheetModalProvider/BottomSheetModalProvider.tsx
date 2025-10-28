@@ -1,4 +1,4 @@
-import { PortalProvider } from '@gorhom/portal';
+import { PortalHost, PortalProvider } from '@gorhom/portal';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { useSharedValue } from 'react-native-reanimated';
 import {
@@ -23,6 +23,7 @@ import type {
 
 const BottomSheetModalProviderWrapper = ({
   children,
+  shouldRenderPortalProvider = true,
 }: BottomSheetModalProviderProps) => {
   //#region layout variables
   const animatedContainerLayoutState = useSharedValue<ContainerLayoutState>(
@@ -201,7 +202,12 @@ const BottomSheetModalProviderWrapper = ({
         <BottomSheetHostingContainer
           containerLayoutState={animatedContainerLayoutState}
         />
-        <PortalProvider rootHostName={hostName}>{children}</PortalProvider>
+        {shouldRenderPortalProvider ? (
+          <PortalProvider shouldAddRootHost={false}>{children}</PortalProvider>
+        ) : (
+          children
+        )}
+        <PortalHost name={hostName} />
       </BottomSheetModalInternalProvider>
     </BottomSheetModalProvider>
   );
