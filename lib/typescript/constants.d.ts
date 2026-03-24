@@ -1,4 +1,3 @@
-import type Animated from 'react-native-reanimated';
 import type { SpringConfig, TimingConfig } from './types';
 declare const WINDOW_HEIGHT: number, WINDOW_WIDTH: number;
 declare const SCREEN_HEIGHT: number, SCREEN_WIDTH: number;
@@ -56,7 +55,7 @@ declare enum SNAP_POINT_TYPE {
     PROVIDED = 0,
     DYNAMIC = 1
 }
-declare const ANIMATION_EASING: Animated.EasingFunction;
+declare const ANIMATION_EASING: import("react-native-reanimated").EasingFunction;
 declare const ANIMATION_DURATION = 250;
 declare const ANIMATION_CONFIGS: TimingConfig | SpringConfig;
 declare const SCROLLABLE_DECELERATION_RATE_MAPPER: {
