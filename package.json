@@ -40,7 +40,7 @@
     "bootstrap": "yarn install && yarn example"
   },
   "dependencies": {
-    "@gorhom/portal": "Peersyst/react-native-portal",
+    "@gorhom/portal": "Peersyst/react-native-portal#23caa7bbd43a418eff6eeb58d993fe62cbaca800",
     "invariant": "^2.2.4"
   },
   "devDependencies": {
