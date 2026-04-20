@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       '@gorhom/portal':
-        specifier: Peersyst/react-native-portal
-        version: https://codeload.github.com/Peersyst/react-native-portal/tar.gz/2d54b1dfdc337c3602709e0e90b3b28e5956b47a(@types/react@18.3.21)(react-native@0.76.0(@babel/core@7.27.1)(@babel/preset-env@7.27.2(@babel/core@7.27.1))(@types/react@18.3.21)(react@18.3.1))(react@18.3.1)
+        specifier: Peersyst/react-native-portal#23caa7bbd43a418eff6eeb58d993fe62cbaca800
+        version: https://codeload.github.com/Peersyst/react-native-portal/tar.gz/23caa7bbd43a418eff6eeb58d993fe62cbaca800(@types/react@18.3.21)(react-native@0.76.0(@babel/core@7.27.1)(@babel/preset-env@7.27.2(@babel/core@7.27.1))(@types/react@18.3.21)(react@18.3.1))(react@18.3.1)
       invariant:
         specifier: ^2.2.4
         version: 2.2.4
@@ -941,8 +941,8 @@ packages:
     resolution: {integrity: sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A==}
     engines: {node: '>=0.8.0'}
 
-  '@gorhom/portal@https://codeload.github.com/Peersyst/react-native-portal/tar.gz/2d54b1dfdc337c3602709e0e90b3b28e5956b47a':
-    resolution: {tarball: https://codeload.github.com/Peersyst/react-native-portal/tar.gz/2d54b1dfdc337c3602709e0e90b3b28e5956b47a}
+  '@gorhom/portal@https://codeload.github.com/Peersyst/react-native-portal/tar.gz/23caa7bbd43a418eff6eeb58d993fe62cbaca800':
+    resolution: {tarball: https://codeload.github.com/Peersyst/react-native-portal/tar.gz/23caa7bbd43a418eff6eeb58d993fe62cbaca800}
     version: 1.0.14
     peerDependencies:
       react: '*'
@@ -4850,7 +4850,7 @@ snapshots:
     dependencies:
       '@types/hammerjs': 2.0.46
 
-  '@gorhom/portal@https://codeload.github.com/Peersyst/react-native-portal/tar.gz/2d54b1dfdc337c3602709e0e90b3b28e5956b47a(@types/react@18.3.21)(react-native@0.76.0(@babel/core@7.27.1)(@babel/preset-env@7.27.2(@babel/core@7.27.1))(@types/react@18.3.21)(react@18.3.1))(react@18.3.1)':
+  '@gorhom/portal@https://codeload.github.com/Peersyst/react-native-portal/tar.gz/23caa7bbd43a418eff6eeb58d993fe62cbaca800(@types/react@18.3.21)(react-native@0.76.0(@babel/core@7.27.1)(@babel/preset-env@7.27.2(@babel/core@7.27.1))(@types/react@18.3.21)(react@18.3.1))(react@18.3.1)':
     dependencies:
       its-fine: https://codeload.github.com/Peersyst/its-fine/tar.gz/cb0b6c11e067b03f87ae630c27c73bd6cbb90c0b(@types/react@18.3.21)(react@18.3.1)
       nanoid: 3.3.11
